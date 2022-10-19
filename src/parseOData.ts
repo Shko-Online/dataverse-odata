@@ -11,6 +11,10 @@ export const parseOData = (query: string) => {
     if ($expand !== null) {
         result.$expand = { toDo: $expand };
     }
+    const $top = parser.get('$top');
+    if ($top !== null) {
+        result.$top = parseInt($top);
+    }
     return result;
 }
 

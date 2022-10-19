@@ -6,10 +6,15 @@
     "strict": true,
     "declaration": true,
     "declarationMap": true,
-    "outDir": "./dist"
-  }, 
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@albanian-xrm/dataverse-odata*": [
+        "./src/*"
+      ]
+    }
+  },
   "exclude": [
-    "tests",
     "dist",
     "node_modules"
   ]

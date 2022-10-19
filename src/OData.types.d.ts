@@ -1,6 +1,4 @@
-export interface ODataSelect {
-    $select?: string[];
-}
+
 
 export interface ODataExpand {
     $expand?: {
@@ -10,6 +8,14 @@ export interface ODataExpand {
 
 export interface ODataFilter {
     $filter?: StandardOperator
+}
+
+export interface ODataSelect {
+    $select?: string[];
+}
+
+export interface ODataTop {
+    $top?: number;
 }
 
 export type StandardOperators = 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
@@ -37,4 +43,4 @@ export interface BinaryOperator {
     right: StandardOperator;
 }
 
-export type ODataQuery = ODataExpand & ODataFilter & ODataSelect;
+export type ODataQuery = ODataExpand & ODataFilter & ODataSelect & ODataTop;
