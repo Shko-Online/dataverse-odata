@@ -1,4 +1,9 @@
-
+export interface ODataError {
+    error?: {
+        code: string;
+        message: string;
+    }
+}
 
 export interface ODataExpand {
     $expand?: {
@@ -43,4 +48,4 @@ export interface BinaryOperator {
     right: StandardOperator;
 }
 
-export type ODataQuery = ODataExpand & ODataFilter & ODataSelect & ODataTop;
+export type ODataQuery = ODataError & ODataExpand & ODataFilter & ODataSelect & ODataTop;

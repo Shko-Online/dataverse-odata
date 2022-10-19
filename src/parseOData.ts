@@ -13,6 +13,13 @@ export const parseOData = (query: string) => {
     }
     const $top = parser.get('$top');
     if ($top !== null) {
+        if (!$top.match(/^\d+$/) || parseInt($top) <= 0) {
+            result.error = {
+                code: '0x0',
+                message: `Invalid value '${$top}' for $top query option found. The $top query option requires a non-negative integer value.`
+            }
+            return result;
+        }
         result.$top = parseInt($top);
     }
     return result;
