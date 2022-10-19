@@ -1,26 +1,19 @@
-import { ODataQuery } from './OData.types';
+import { ODataQuery } from '@albanian-xrm/dataverse-odata/OData.types';
+import { getTopFromParser } from '@albanian-xrm/dataverse-odata/getTopFromParser';
+import { getSelectFromParser } from '@albanian-xrm/dataverse-odata/getSelectFromParser';
+import { getExpandFromParser } from '@albanian-xrm/dataverse-odata/getExpandFromParser';
 
 export const parseOData = (query: string) => {
     const parser = new URLSearchParams(query);
     const result = {} as ODataQuery;
-    const $select = parser.get('$select');
-    if ($select !== null) {
-        result.$select = $select.split(',');
+    if (getExpandFromParser(parser, result)) {
+        return result;
     }
-    const $expand = parser.get('$expand');
-    if ($expand !== null) {
-        result.$expand = { toDo: $expand };
+    if (getSelectFromParser(parser, result)) {
+        return result;
     }
-    const $top = parser.get('$top');
-    if ($top !== null) {
-        if (!$top.match(/^\d+$/) || parseInt($top) <= 0) {
-            result.error = {
-                code: '0x0',
-                message: `Invalid value '${$top}' for $top query option found. The $top query option requires a non-negative integer value.`
-            }
-            return result;
-        }
-        result.$top = parseInt($top);
+    if (getTopFromParser(parser, result)) {
+        return result;
     }
     return result;
 }

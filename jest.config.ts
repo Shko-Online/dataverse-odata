@@ -9,7 +9,6 @@ export default {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   moduleNameMapper: {
-    '@albanian-xrm/dataverse-odata': '<rootDir>/src/index.ts',
     '@albanian-xrm/dataverse-odata/(.*)': '<rootDir>/src/$1',
   },
   coverageReporters: ['cobertura', 'text', 'html']

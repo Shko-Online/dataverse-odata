@@ -22,4 +22,11 @@ describe('parseOData', () => {
         expect(result.error?.code).toEqual('0x0');
         expect(result.error?.message).toEqual(`Invalid value '-2' for $top query option found. The $top query option requires a non-negative integer value.`);
     })
+    
+    test('parse $top errors for 0', () => {
+        const result =  parseOData('?$select=name,numberofemployees&$top=0');           
+        expect(result.error).not.toBeNull();
+        expect(result.error?.code).toEqual('0x0');
+        expect(result.error?.message).toEqual(`Invalid value for $top query option.`);
+    })
 })

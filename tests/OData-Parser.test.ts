@@ -3,7 +3,7 @@ import { parseOData } from '@albanian-xrm/dataverse-odata/parseOData';
 
 describe('parse odata', () => {
     test('parse $select', () => {
-        const result =  parseOData('?$select=name,numberofemployees$top=5');           
+        const result = parseOData('?$select=name,numberofemployees$top=5');
         expect(result.$select).not.toBeNull();
         expect(result.$select).toContain('name');
     })
@@ -12,5 +12,6 @@ describe('parse odata', () => {
         const result = parseOData('?$select2=name,numberofemployees&$expand=Account_Leads($select=name)');
         expect(result.$select).not.toBeNull();
         expect(result.$expand).not.toBeNull();
+        expect(result.$expand?.Account_Leads).not.toBeNull();
     })
 })
