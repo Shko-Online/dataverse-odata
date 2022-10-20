@@ -7,15 +7,21 @@ export interface ODataError {
 
 export interface ODataExpand {
     $expand?: {
-        [relationship: string]: string;
-    }
+        [relationship: string]: ODataExpandQuery;
+    };
 }
+
+export type ODataExpandQuery = ODataSelect & ODataExpand;
 
 export interface ODataFilter {
     $filter?: StandardOperator
 }
 
 export interface ODataSelect {
+    /**
+     * Attributes to select.
+     * Empty array equals to all Attributes. 
+     */
     $select?: string[];
 }
 

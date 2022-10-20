@@ -1,8 +1,8 @@
 import { describe, expect, test } from '@jest/globals';
 import { parseOData } from '@albanian-xrm/dataverse-odata/parseOData';
 
-describe('parseOData', () => {
-    test('parse $top', () => {
+describe('parseOData $top', () => {
+    test('parse $top 5', () => {
         const result = parseOData('?$top=5');   
         console.log(result); 
         expect(result.$top).toEqual(5);
