@@ -10,7 +10,7 @@
     "baseUrl": ".",
     "paths": {
       "@albanian-xrm/dataverse-odata*": [
-        "./src/*"
+        "OData-Parser/src/*"
       ]
     }
   },
