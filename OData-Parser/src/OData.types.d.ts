@@ -1,11 +1,11 @@
-export interface ODataError {
+interface ODataError {
     error?: {
         code: string;
         message: string;
     };
 }
 
-export interface ODataExpand {
+interface ODataExpand {
     /**
      * Use the {@link ODataExpand.$expand $expand} system query option in the navigation properties
      * to control what data from related entities is returned.
@@ -26,9 +26,9 @@ export interface ODataExpand {
     };
 }
 
-export type ODataExpandQuery = ODataSelect & ODataExpand;
+type ODataExpandQuery = ODataSelect & ODataExpand;
 
-export interface ODataFilter {
+interface ODataFilter {
     /**
      * Use the {@link ODataFilter.$filter $filter} system query option to set criteria for which rows will be returned.
      *
@@ -37,7 +37,7 @@ export interface ODataFilter {
     $filter?: StandardOperator;
 }
 
-export interface ODataFetch {
+interface ODataFetch {
     /**
      * You can compose a FetchXML query for a specific table.
      * Then, URL-encode the XML and pass it to the entity set
@@ -48,7 +48,7 @@ export interface ODataFetch {
     fetchXml?: XMLDocument;
 }
 
-export interface ODataOrderBy {
+interface ODataOrderBy {
     /**
      * Specify the order in which items are returned using the {@link ODataOrderBy.$orderby $orderby}
      * system query option. Use the asc or desc suffix to specify ascending or descending order
@@ -59,7 +59,7 @@ export interface ODataOrderBy {
     $orderby?: { column: string; asc: boolean }[];
 }
 
-export interface ODataSavedQuery {
+interface ODataSavedQuery {
     /**
      * You can use the `savedqueryid` value and pass it as the value to the {@link ODataSavedQuery.savedQuery savedQuery}
      * parameter to the entity set that matches the corresponding `returnedtypecode` of the saved query.
@@ -69,7 +69,7 @@ export interface ODataSavedQuery {
     savedQuery?: string;
 }
 
-export interface ODataSelect {
+interface ODataSelect {
     /**
      * Use the {@link ODataSelect.$select $select} system query option to limit the properties returned.
      *
@@ -81,7 +81,7 @@ export interface ODataSelect {
     $select?: string[];
 }
 
-export interface ODataTop {
+interface ODataTop {
     /**
      * You can limit the number of results returned by using the {@link ODataTop.$top $top} system query option.
      *
@@ -90,7 +90,7 @@ export interface ODataTop {
     $top?: number;
 }
 
-export interface ODataUserQuery {
+interface ODataUserQuery {
     /**
      * You can use the `userqueryid` value and pass it as the value to the {@link OdataUserQuery.userQuery userQuery}
      * parameter to the entity set that matches the corresponding `returnedtypecode` of the user query.
@@ -100,9 +100,9 @@ export interface ODataUserQuery {
     userQuery?: string;
 }
 
-export type StandardOperators = 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
+type StandardOperators = 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
 
-export interface StandardOperator {
+interface StandardOperator {
     operator: StandardOperators;
     /**
      * The left side of the 'X' operator must be a property of the entity.
@@ -114,18 +114,18 @@ export interface StandardOperator {
     right: string | number;
 }
 
-export interface UnaryOperator {
+interface UnaryOperator {
     operator: 'not';
     right: StandardOperator;
 }
 
-export interface BinaryOperator {
+interface BinaryOperator {
     operator: 'and' | 'or';
     left: StandardOperator;
     right: StandardOperator;
 }
 
-export type ODataQuery = ODataError &
+type ODataQuery = ODataError &
     ODataExpand &
     ODataFetch &
     ODataFilter &
@@ -134,3 +134,21 @@ export type ODataQuery = ODataError &
     ODataSelect &
     ODataTop &
     ODataUserQuery;
+
+export type {
+    BinaryOperator,
+    ODataError,
+    ODataExpand,
+    ODataExpandQuery,
+    ODataFetch,
+    ODataFilter,
+    ODataOrderBy,
+    ODataQuery,
+    ODataSavedQuery,
+    ODataSelect,
+    ODataTop,
+    ODataUserQuery,
+    StandardOperator,
+    StandardOperators,
+    UnaryOperator,    
+};

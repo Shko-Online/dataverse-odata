@@ -16,11 +16,8 @@
         "resolveJsonModule": true,
         "declaration": true,
         "declarationMap": true,
-        "sourceMap": true,       
-        "baseUrl": ".",       
-        "typeRoots": [
-            "./node_modules/@types"
-        ]
+        "sourceMap": true,
+        "baseUrl": "."
     },
     "exclude": [
         "node_modules",
