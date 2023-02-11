@@ -33,12 +33,13 @@ steps:
     workingDir: 'OData-Parser'
   displayName: "Build"
 
-- script: 'npx semantic-release'
-  workingDirectory: 'Odata-Parser'
-  displayName: 'Semantic Release'
-  env:
-    GITHUB_TOKEN: $(GITHUB_TOKEN)
-    NPM_TOKEN: $(NPM_TOKEN)
+- task: Npm@1
+  condition: eq(variables['Build.SourceBranchName'], 'main')
+  inputs:
+    command: 'custom'
+    customCommand: 'run semantic-release'
+    workingDir: 'OData-Parser'
+  displayName: "Semantic Release"
 
 - task: PublishCodeCoverageResults@1
   displayName: "Publish code coverage results"
