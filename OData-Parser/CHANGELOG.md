@@ -1,3 +1,10 @@
+## [0.1.3](https://github.com/shko-online/dataverse-odata/compare/v0.1.2...v0.1.3) (2023-02-11)
+
+
+### Bug Fixes
+
+* Fixed bundled types ([abbd95b](https://github.com/shko-online/dataverse-odata/commit/abbd95bbc0d118e9c2c20cbeb224025e84e33a9e))
+
 ## [0.1.2](https://github.com/shko-online/dataverse-odata/compare/v0.1.1...v0.1.2) (2023-02-11)
 
 
