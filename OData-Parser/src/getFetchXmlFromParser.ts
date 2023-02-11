@@ -1,7 +1,7 @@
 import type { ODataQuery } from './OData.types';
 
 /**
- * Parses the $fetchXml query
+ * Parses the fetchXml query
  * @returns Returns true when the parse has an error
  */
 export const getFetchXmlFromParser = (parser: URLSearchParams, result: ODataQuery): boolean => {

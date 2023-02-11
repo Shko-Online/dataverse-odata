@@ -1,4 +1,5 @@
 import type { ODataError, ODataExpand, ODataExpandQuery, ODataQuery } from './OData.types';
+
 import { getSelectFromParser } from './getSelectFromParser';
 
 /**

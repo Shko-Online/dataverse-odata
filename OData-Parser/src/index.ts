@@ -11,6 +11,7 @@ export type {
     StandardOperator,
     StandardOperators,
 } from './OData.types';
+
 export { parseOData } from './parseOData';
 import { parseOData } from './parseOData';
 export default parseOData;

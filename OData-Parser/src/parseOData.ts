@@ -1,9 +1,15 @@
 import type { ODataQuery } from './OData.types';
+
 import { getTopFromParser } from './getTopFromParser';
 import { getSelectFromParser } from './getSelectFromParser';
 import { getExpandFromParser } from './getExpandFromParser';
 import { getFetchXmlFromParser } from './getFetchXmlFromParser';
 
+/**
+ * parses the OData query and applies some Dataverse validations
+ * @param query The OData query
+ * @returns The parsed OData query
+ */
 export const parseOData = (query: string) => {
     const parser = new URLSearchParams(query);
     const result = {} as ODataQuery;
