@@ -12,6 +12,13 @@ export type {
     StandardOperators,
 } from './OData.types';
 
+export { getExpandFromParser } from './getExpandFromParser';
+export { getFetchXmlFromParser } from './getFetchXmlFromParser';
+export { getOrderByFromParser } from './getOrderByFromParser';
+export { getSelectFromParser } from './getSelectFromParser';
+export { getTopFromParser } from './getTopFromParser';
+export { getXQueryFromParser } from './getXQueryFromParser';
+
 export { parseOData } from './parseOData';
 import { parseOData } from './parseOData';
 export default parseOData;

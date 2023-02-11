@@ -1,13 +1,13 @@
-import type { ODataQuery } from './OData.types';
+import type { ODataQuery, ODataSelect } from './OData.types';
 
 /**
- * Parses the $select query
- * @returns Returns true when the parse has an error
+ * Parses the {@link ODataSelect.$select $select} query
+ * @returns Returns `false` when the parse has an error
  */
 export const getSelectFromParser = (parser: URLSearchParams, result: ODataQuery): boolean => {
     const $select = parser.get('$select');
     if ($select !== null) {
         result.$select = $select.split(',');
     }
-    return false;
+    return true;
 };

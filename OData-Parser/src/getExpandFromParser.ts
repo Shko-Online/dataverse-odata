@@ -3,19 +3,19 @@ import type { ODataError, ODataExpand, ODataExpandQuery, ODataQuery } from './OD
 import { getSelectFromParser } from './getSelectFromParser';
 
 /**
- * Parses the $expand query
- * @returns Returns true when the parse has an error
+ * Parses the {@link ODataExpand.$expand $expand} query
+ * @returns Returns `false` when the parse has an error
  */
 export const getExpandFromParser = (parser: URLSearchParams, result: ODataQuery): boolean => {
     const $expand = parser.get('$expand');
     if ($expand !== null) {
         result.$expand = {};
 
-        if (extractExpand($expand, result)) {
-            return true;
+        if (!extractExpand($expand, result)) {
+            return false;
         }
     }
-    return false;
+    return true;
 };
 
 const extractExpand = (value: string, $expand: ODataExpand & ODataError) => {
@@ -29,7 +29,7 @@ const extractExpand = (value: string, $expand: ODataExpand & ODataError) => {
             code: '0x0',
             message: 'invalid expand expression',
         };
-        return true;
+        return false;
     }
     let matchSeparator = match[3];
     let matchLength = match[0].length;
@@ -44,23 +44,23 @@ const extractExpand = (value: string, $expand: ODataExpand & ODataError) => {
                 code: '0x0',
                 message: error,
             };
-            return true;
+            return false;
         }
 
         if ($expand.$expand !== undefined) {
             const innerExpand = {} as ODataExpandQuery & ODataError;
             const parser = new URLSearchParams('?' + value.substring(matchLength, matchLength + index));
-            if (getSelectFromParser(parser, innerExpand)) {
+            if (!getSelectFromParser(parser, innerExpand)) {
                 $expand.error = innerExpand.error;
-                return true;
+                return false;
             }
-            if (getExpandFromParser(parser, innerExpand)) {
+            if (!getExpandFromParser(parser, innerExpand)) {
                 $expand.error = innerExpand.error;
-                return true;
+                return false;
             }
             if (innerExpand.$expand === undefined && innerExpand.$select === undefined) {
                 $expand.error = { code: '0x0', message: 'Empty expand' };
-                return true;
+                return false;
             }
             $expand.$expand[match[1]] = innerExpand;
         }
@@ -76,12 +76,12 @@ const extractExpand = (value: string, $expand: ODataExpand & ODataError) => {
     }
 
     if (matchSeparator === ',') {
-        if (extractExpand(value.substring(matchLength), $expand)) {
-            return true;
+        if (!extractExpand(value.substring(matchLength), $expand)) {
+            return false;
         }
     }
 
-    return false;
+    return true;
 };
 
 const getClosingBracket = (value: string): { index: number; error?: string } => {

@@ -1,6 +1,5 @@
-__tests__
+tests/
 __type-tests__
-__sample-components__
 coverage/
-jest.config.js
+jest.config.ts
 setup-tests.ts
