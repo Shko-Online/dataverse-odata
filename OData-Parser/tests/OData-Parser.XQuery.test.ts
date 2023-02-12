@@ -9,6 +9,13 @@ describe('parseOData XQuery', () => {
         });
     });
 
+    test('parse savedQuery unrecognized', () => {
+        const result = parseOData('?savedQuery=');
+        expect(result.error).not.toBeNull();
+        expect(result.error?.code).toEqual('0x0');
+        expect(result.error?.message).toEqual('Unrecognized Guid format.');
+    });
+
     test('parse savedQuery validation', () => {
         const result = parseOData('?savedQuery=a');
         expect(result.error).not.toBeNull();
@@ -21,6 +28,13 @@ describe('parseOData XQuery', () => {
         expect(result).toEqual({
             userQuery: '121c6fd8-1975-e511-80d4-00155d2a68d1'
         });
+    });
+
+    test('parse userQuery unrecognized', () => {
+        const result = parseOData('?userQuery=');
+        expect(result.error).not.toBeNull();
+        expect(result.error?.code).toEqual('0x0');
+        expect(result.error?.message).toEqual('Unrecognized Guid format.');
     });
 
     test('parse userQuery validation', () => {

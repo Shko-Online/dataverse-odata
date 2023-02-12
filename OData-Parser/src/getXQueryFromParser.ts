@@ -1,6 +1,6 @@
 import type { ODataQuery, ODataSavedQuery, ODataUserQuery } from './OData.types';
-
-const guidRegex = /[0-9A-F]{8}\-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}/gi;
+import { isGuid } from './validators/isGuid';
+import { recognizedGuid } from './validators/recognizedGuid';
 
 /**
  * Parses the {@link ODataSavedQuery.savedQuery savedQuery} or
@@ -12,23 +12,14 @@ export const getXQueryFromParser = (
     parser: URLSearchParams,
     result: ODataQuery,
 ): boolean => {
-    const xQuery = parser.get(X);
-    if (xQuery !== null) {
-        if (!xQuery.trim()) {
-            result.error = {
-                code: '0x0',
-                message: 'Unrecognized Guid format.',
-            };
-            return false;
-        }
-        if (!xQuery.match(guidRegex)) {
-            result.error = {
-                code: '0x0',
-                message: 'Guid should contain 32 digits with 4 dashes (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx).',
-            };
-            return false;
-        }
-        result[X] = xQuery;
+    const value = parser.getAll(X);
+    if (value.length === 0) {
+        return true;
     }
+    if (!recognizedGuid(value, result) || !isGuid(value, result)) {
+        return false;
+    }
+
+    result[X] = value[0];
     return true;
 };

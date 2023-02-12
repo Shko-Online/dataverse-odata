@@ -11,6 +11,13 @@ describe('parseOData fetchXml', () => {
         );
     });
 
+    test('errors on empty string', () => {
+        const result = parseOData('?fetchXml=');
+        expect(result.error).not.toBeNull();
+        expect(result.error?.code).toEqual('0x80040203');
+        expect(result.error?.message).toEqual('Expected non-empty string.');
+    });
+
     test('parse fetchXml fails if invalid XML', () => {
         const result = parseOData('?fetchXml=invalid');
         expect(result.error).not.toBeNull();

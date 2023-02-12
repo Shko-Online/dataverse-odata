@@ -5,6 +5,7 @@ import { getSelectFromParser } from './getSelectFromParser';
 import { getExpandFromParser } from './getExpandFromParser';
 import { getFetchXmlFromParser } from './getFetchXmlFromParser';
 import { getXQueryFromParser } from './getXQueryFromParser';
+import { getOrderByFromParser } from './getOrderByFromParser';
 
 /**
  * parses the OData query and applies some Dataverse validations
@@ -14,23 +15,14 @@ import { getXQueryFromParser } from './getXQueryFromParser';
 export const parseOData = (query: string) => {
     const parser = new URLSearchParams(query);
     const result = {} as ODataQuery;
-    if (!getExpandFromParser(parser, result)) {
-        return result;
-    }
-    if (!getSelectFromParser(parser, result)) {
-        return result;
-    }
-    if (!getTopFromParser(parser, result)) {
-        return result;
-    }
-    if (!getFetchXmlFromParser(parser, result)) {
-        return result;
-    }
-    if (!getXQueryFromParser('savedQuery', parser, result)) {
-        return result;
-    }
-    if (!getXQueryFromParser('userQuery', parser, result)) {
-        return result;
-    }
+
+    getExpandFromParser(parser, result) &&
+        getSelectFromParser(parser, result) &&
+        getTopFromParser(parser, result) &&
+        getFetchXmlFromParser(parser, result) &&
+        getXQueryFromParser('savedQuery', parser, result) &&
+        getXQueryFromParser('userQuery', parser, result) &&
+        getOrderByFromParser(parser, result);
+
     return result;
 };

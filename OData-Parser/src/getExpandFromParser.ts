@@ -1,25 +1,33 @@
 import type { ODataError, ODataExpand, ODataExpandQuery, ODataQuery } from './OData.types';
 
 import { getSelectFromParser } from './getSelectFromParser';
+import { atMostOnce } from './validators/atMostOnce';
+
+const option = '$expand';
 
 /**
  * Parses the {@link ODataExpand.$expand $expand} query
  * @returns Returns `false` when the parse has an error
  */
 export const getExpandFromParser = (parser: URLSearchParams, result: ODataQuery): boolean => {
-    const $expand = parser.get('$expand');
-    if ($expand !== null) {
-        result.$expand = {};
-
-        if (!extractExpand($expand, result)) {
-            return false;
-        }
+    const value = parser.getAll(option);
+    if (value.length === 0) {
+        return true;
     }
+    if (!atMostOnce(option, value, result)) {
+        return false;
+    }
+
+    result.$expand = {};
+    if (!extractExpand(value[0], result)) {
+        return false;
+    }
+
     return true;
 };
 
 const extractExpand = (value: string, $expand: ODataExpand & ODataError) => {
-    const match = value.match(/^\s*(\w(\w|\d|_)*)\s*(,|\()?\s*/);
+    const match = value.match(/^\s*(\w(\w|\d|_)*)\s*(,|\(|\))?\s*/);
     if (
         match === null ||
         (match[0].length < value.length && match[3] === null) ||
@@ -27,7 +35,7 @@ const extractExpand = (value: string, $expand: ODataExpand & ODataError) => {
     ) {
         $expand.error = {
             code: '0x0',
-            message: 'invalid expand expression',
+            message: `Term '${value}' is not valid in a $select or $expand expression.`,
         };
         return false;
     }
@@ -59,7 +67,10 @@ const extractExpand = (value: string, $expand: ODataExpand & ODataError) => {
                 return false;
             }
             if (innerExpand.$expand === undefined && innerExpand.$select === undefined) {
-                $expand.error = { code: '0x0', message: 'Empty expand' };
+                $expand.error = {
+                    code: '0x0',
+                    message: `Missing expand option on navigation property '${match[1]}'. If a parenthesis expression follows an expanded navigation property, then at least one expand option must be provided.`,
+                };
                 return false;
             }
             $expand.$expand[match[1]] = innerExpand;
@@ -90,7 +101,7 @@ const getClosingBracket = (value: string): { index: number; error?: string } => 
     while (depth > 0) {
         const match = value.substring(startAt).match(/\(|\)/);
         if (match === null) {
-            return { error: 'no closing bracket found', index: -1 };
+            return { error: 'Found an unbalanced bracket expression.', index: -1 };
         }
         if (match[0] === ')') {
             depth -= 1;
@@ -100,7 +111,7 @@ const getClosingBracket = (value: string): { index: number; error?: string } => 
         } else {
             depth += 1;
         }
-        startAt = (match.index || 0) + 1;
+        startAt += (match.index || 0) + 1;
     }
-    return { error: 'no closing bracket found', index: -1 };
+    return { error: 'Found an unbalanced bracket expression.', index: -1 };
 };
