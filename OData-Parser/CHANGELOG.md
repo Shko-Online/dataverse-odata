@@ -1,3 +1,10 @@
+## [0.1.4](https://github.com/shko-online/dataverse-odata/compare/v0.1.3...v0.1.4) (2023-02-12)
+
+
+### Bug Fixes
+
+* added orderby support ([ea3748a](https://github.com/shko-online/dataverse-odata/commit/ea3748a5569d6ce2a086ff14ceb4a99421ecd069))
+
 ## [0.1.3](https://github.com/shko-online/dataverse-odata/compare/v0.1.2...v0.1.3) (2023-02-11)
 
 
