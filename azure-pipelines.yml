@@ -10,31 +10,21 @@ steps:
 - task: Npm@1
   inputs:
     command: 'install'
-    workingDir: 'OData-Parser'
   displayName: "Install NPM Dependencies"
 
 - task: Npm@1
   inputs:
     command: 'custom'
     customCommand: 'test'
-    workingDir: 'OData-Parser'
   displayName: "Test"
-
-- task: Npm@1
-  inputs:
-    command: 'install'
-    workingDir: 'scripts'
-  displayName: "Install 'scripts' NPM Dependencies"
 
 - task: Npm@1
   inputs:
     command: 'custom'
     customCommand: 'run build'
-    workingDir: 'OData-Parser'
   displayName: "Build"
 
 - script: 'npx semantic-release'
-  workingDirectory: 'OData-Parser'
   displayName: 'Semantic Release'
   env:
     GITHUB_TOKEN: $(GITHUB_TOKEN)
@@ -45,4 +35,4 @@ steps:
   condition: succeededOrFailed()
   inputs:
     codeCoverageTool: Cobertura
-    summaryFileLocation: "OData-Parser/coverage/cobertura-coverage.xml"
+    summaryFileLocation: "coverage/cobertura-coverage.xml"

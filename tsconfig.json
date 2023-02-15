@@ -1,21 +1,33 @@
 {
-  "compilerOptions": {
-    "esModuleInterop": true,
-    "target": "es6",
-    "module": "commonjs",
-    "strict": true,
-    "declaration": true,
-    "declarationMap": true,
-    "outDir": "./dist",
-    "baseUrl": ".",
-    "paths": {
-      "@albanian-xrm/dataverse-odata*": [
-        "OData-Parser/src/*"
-      ]
-    }
-  },
-  "exclude": [
-    "dist",
-    "node_modules"
-  ]
+    "compilerOptions": {
+        "jsx": "react",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "target": "es5",
+        "lib": [
+            "es5",
+            "es6",
+            "dom"
+        ],
+        "module": "ES6",
+        "moduleResolution": "node",
+        "noEmit": false,
+        "outDir": "lib",
+        "resolveJsonModule": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "baseUrl": "."
+    },
+    "exclude": [
+        "node_modules",
+        "wwwroot",
+        "lib"
+    ],
+    "include": [
+        "src",
+        "tests",
+        "__type-tests__",
+        "__test-components__"
+    ]
 }

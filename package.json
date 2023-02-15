@@ -3,7 +3,7 @@
   "version": "0.1.4",
   "description": "This package will help parse OData strings (only the Microsoft Dataverse subset). It can be used as a validator, or you can build some javascript library which consumes the output of this library.",
   "scripts": {
-    "build": "npm run lint && node ../scripts/build.js",
+    "build": "npm run lint && build-npm-package",
     "lint": "eslint",
     "tsc": "tsc --project tsconfig.build.json",
     "test": "jest --coverage --maxWorkers=4",
@@ -61,6 +61,7 @@
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/npm": "^9.0.2",
     "@semantic-release/release-notes-generator": "^10.0.3",
+    "@shko.online/build-npm-package": "^0.1.0",
     "@storybook/babel-plugin-require-context-hook": "^1.0.1",
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
