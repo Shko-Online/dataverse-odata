@@ -4,7 +4,7 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '18.x'
+    versionSpec: '24.x'
   displayName: 'Install Node.js'
 
 - task: Npm@1
@@ -23,12 +23,6 @@ steps:
     command: 'custom'
     customCommand: 'run build'
   displayName: "Build"
-
-- script: 'npx semantic-release'
-  displayName: 'Semantic Release'
-  env:
-    GITHUB_TOKEN: $(GITHUB_TOKEN)
-    NPM_TOKEN: $(NPM_TOKEN)
 
 - task: PublishCodeCoverageResults@1
   displayName: "Publish code coverage results"
