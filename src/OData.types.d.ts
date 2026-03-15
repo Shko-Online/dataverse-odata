@@ -30,12 +30,14 @@ type ODataExpandQuery = ODataSelect & ODataExpand;
 
 interface ODataFilter {
     /**
-     * Use the {@link ODataFilter.$filter $filter} system query option to set criteria for which rows will be returned.
+     * Use the {@link $filter $filter} system query option to set criteria for which rows will be returned.
      *
      * * Microsoft Docs: {@link https://learn.microsoft.com/power-apps/developer/data-platform/webapi/query-data-web-api?WT.mc_id=DX-MVP-5004767#filter-results Filter results }
      */
-    $filter?: StandardOperator;
+    $filter?: FilterOperator;
 }
+
+type FilterOperator = StandardOperator | ColumnOperator | UnaryOperator | BinaryOperator | QueryFunctionOperator; 
 
 interface ODataFetch {
     /**
@@ -100,7 +102,20 @@ interface ODataUserQuery {
     userQuery?: string;
 }
 
-type StandardOperators = 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le';
+type StandardEqualityOperators = 'eq' | 'ne';
+
+type StandardOperators = StandardEqualityOperators | 'gt' | 'ge' | 'lt' | 'le';
+
+/**
+ * 
+ * * Microsoft Docs: {@link https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/query/filter-rows#column-comparison Column comparison }
+ */
+interface ColumnOperator {
+    column: string;
+    operator: StandardOperators;
+    otherColumn: string;
+}
+
 
 interface StandardOperator {
     operator: StandardOperators;
@@ -114,15 +129,29 @@ interface StandardOperator {
     right: string | number;
 }
 
+type QueryFunctionOperators = 'contains' | 'endswith' | 'startswith';
+
+interface QueryFunctionOperator {
+    operator: QueryFunctionOperators;
+    /**
+     * The left side of the 'X' operator must be a property of the entity.
+     */
+    left: string;
+    /**
+     * The right side of the 'X' operator must be a constant value.
+     */
+    right: string;
+}
+
 interface UnaryOperator {
     operator: 'not';
-    right: StandardOperator;
+    right: FilterOperator;
 }
 
 interface BinaryOperator {
     operator: 'and' | 'or';
-    left: StandardOperator;
-    right: StandardOperator;
+    left: FilterOperator;
+    right: FilterOperator;
 }
 
 type ODataQuery = ODataError &

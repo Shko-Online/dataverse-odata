@@ -6,6 +6,7 @@ import { getExpandFromParser } from './getExpandFromParser';
 import { getFetchXmlFromParser } from './getFetchXmlFromParser';
 import { getXQueryFromParser } from './getXQueryFromParser';
 import { getOrderByFromParser } from './getOrderByFromParser';
+import { getFilterFromParser } from './getFilterFromParser';
 
 /**
  * parses the OData query and applies some Dataverse validations
@@ -17,9 +18,10 @@ export const parseOData = (query: string) => {
     const result = {} as ODataQuery;
 
     getExpandFromParser(parser, result) &&
+        getFetchXmlFromParser(parser, result) &&
+        getFilterFromParser(parser, result) &&
         getSelectFromParser(parser, result) &&
         getTopFromParser(parser, result) &&
-        getFetchXmlFromParser(parser, result) &&
         getXQueryFromParser('savedQuery', parser, result) &&
         getXQueryFromParser('userQuery', parser, result) &&
         getOrderByFromParser(parser, result);

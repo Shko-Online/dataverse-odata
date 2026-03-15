@@ -77,7 +77,7 @@ const extractExpand = (value: string, $expand: ODataExpand & ODataError) => {
         }
 
         matchLength = matchLength + index;
-        const secondMatch = value.substring(matchLength + 1).match(/\s*(,?)\s*d/);
+        const secondMatch = new RegExp(/\s*(,?)\s*d/).exec(value.substring(matchLength + 1));
         if (secondMatch !== null) {
             matchLength = matchLength + secondMatch[0].length;
             if (secondMatch[1] !== null) {
