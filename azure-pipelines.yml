@@ -24,7 +24,7 @@ steps:
     customCommand: 'run build'
   displayName: "Build"
 
-- task: PublishCodeCoverageResults@1
+- task: PublishCodeCoverageResults@2
   displayName: "Publish code coverage results"
   condition: succeededOrFailed()
   inputs:
