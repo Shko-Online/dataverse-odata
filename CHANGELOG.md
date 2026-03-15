@@ -1,3 +1,10 @@
+## [0.1.5](https://github.com/Shko-Online/dataverse-odata/compare/v0.1.4...v0.1.5) (2026-03-15)
+
+
+### Bug Fixes
+
+* Properly implemented $orderBy ([c693298](https://github.com/Shko-Online/dataverse-odata/commit/c693298bcc4cb2a96ebbc39939c60fb5abdd93d4))
+
 ## [0.1.4](https://github.com/shko-online/dataverse-odata/compare/v0.1.3...v0.1.4) (2023-02-12)
 
 
