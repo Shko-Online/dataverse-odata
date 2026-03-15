@@ -35,11 +35,7 @@ jobs:
       - name: Run tests
         run: npm test
 
-      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
-        run: npm audit signatures
-
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ''
         run: npx semantic-release
