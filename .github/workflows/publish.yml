@@ -26,4 +26,4 @@ jobs:
 
       - run: npm test
 
-      - run: npx semantic-release
+      - run: NODE_AUTH_TOKEN="" npx semantic-release
