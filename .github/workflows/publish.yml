@@ -3,10 +3,6 @@
 
 name: Semantic Release
 
-permissions:
-  id-token: write   # REQUIRED for npm Trusted Publishing
-  contents: write   # Needed for GitHub releases + changelog commits
-
 on:
   push:
     branches: [ main, beta, alpha ]
@@ -41,7 +37,7 @@ jobs:
 
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
         run: npm audit signatures
-        
+
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
