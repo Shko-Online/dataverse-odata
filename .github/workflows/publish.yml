@@ -24,10 +24,10 @@ jobs:
         with:
           fetch-depth: 0 # to be able to get all tags for semantic-release
 
-      - name: Use Node.js 24
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
+      # - name: Use Node.js 24
+      #   uses: actions/setup-node@v6
+      #   with:
+      #     node-version: 24
 
       - name: Install dependencies
         run: npm ci
