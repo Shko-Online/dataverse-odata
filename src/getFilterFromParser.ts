@@ -167,31 +167,25 @@ class FilterParser {
             return { operator: func, left, right };
         }
 
-        if (token.type === 'word' && token.value === 'column') {
-            this.consume();
-            const col1 = this.expect('word').value;
-            const opToken = this.consume();
-            if (!isStandardOperator(opToken.value.toLowerCase())) {
-                throw new Error(`Invalid column comparison operator '${opToken.value}'`);
-            }
-            const col2 = this.expect('word').value;
-            return { column: col1, operator: opToken.value.toLowerCase() as StandardOp, otherColumn: col2 };
-        }
-
         if (token.type === 'word') {
             const left = this.consume().value;
-            const opToken = this.consume();
+            const opToken = this.consume(`a comparison operator`);
             if (!isStandardOperator(opToken.value.toLowerCase())) {
                 throw new Error(`Invalid operator '${opToken.value}'`);
             }
             const operator = opToken.value.toLowerCase() as StandardOp;
-            const right = this.consume();
+            const right = this.consume(`a value or column name`);
             if (right.type === 'string') {
                 return { operator, left, right: right.value };
             } else if (right.type === 'number') {
                 return { operator, left, right: Number(right.value) };
             } else if (right.type === 'word') {
-                return { operator, left, right: right.value };
+                // Constant keywords stay as StandardOperator; bare identifiers are column comparisons
+                const CONSTANTS = ['null', 'true', 'false'];
+                if (CONSTANTS.includes(right.value.toLowerCase())) {
+                    return { operator, left, right: right.value };
+                }
+                return { column: left, operator, otherColumn: right.value };
             } else {
                 throw new Error(`Invalid right-hand side value of type '${right.type}' in filter expression`);
             }

@@ -151,13 +151,13 @@ describe('parseOData $filter', () => {
 
     describe('Column comparison', () => {
         test('column eq comparison', () => {
-            const result = parseOData('?$filter=column firstname eq lastname');
+            const result = parseOData('?$filter=firstname eq lastname');
             expect(result.error).toBeUndefined();
             expect(result.$filter).toEqual({ column: 'firstname', operator: 'eq', otherColumn: 'lastname' });
         });
 
         test('column ne comparison', () => {
-            const result = parseOData('?$filter=column firstname ne lastname');
+            const result = parseOData('?$filter=firstname ne lastname');
             expect(result.error).toBeUndefined();
             expect(result.$filter).toEqual({ column: 'firstname', operator: 'ne', otherColumn: 'lastname' });
         });
