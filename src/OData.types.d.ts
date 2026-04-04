@@ -166,6 +166,8 @@ type ODataQuery = ODataError &
 
 export type {
     BinaryOperator,
+    ColumnOperator,
+    FilterOperator,
     ODataError,
     ODataExpand,
     ODataExpandQuery,
@@ -177,6 +179,8 @@ export type {
     ODataSelect,
     ODataTop,
     ODataUserQuery,
+    QueryFunctionOperator,
+    QueryFunctionOperators,
     StandardOperator,
     StandardOperators,
     UnaryOperator,    
