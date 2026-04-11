@@ -1,3 +1,16 @@
+# [0.2.0](https://github.com/Shko-Online/dataverse-odata/compare/v0.1.6...v0.2.0) (2026-04-11)
+
+
+### Bug Fixes
+
+* column comparison uses no keyword prefix, e.g. firstname eq lastname ([34727d5](https://github.com/Shko-Online/dataverse-odata/commit/34727d5ce8698b4d0ec822ee226637169c881028))
+* distinguish between null, boolean and column operators ([62511ef](https://github.com/Shko-Online/dataverse-odata/commit/62511ef624ebbd06aa6a7732b9693e7f50dbbbce))
+
+
+### Features
+
+* implement $filter parser and add sample tests for each operator ([e2f5387](https://github.com/Shko-Online/dataverse-odata/commit/e2f538740422ba51c13ff13ecb9222606a19ce17))
+
 ## [0.1.6](https://github.com/Shko-Online/dataverse-odata/compare/v0.1.5...v0.1.6) (2026-03-15)
 
 
