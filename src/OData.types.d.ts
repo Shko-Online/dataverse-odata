@@ -37,7 +37,14 @@ interface ODataFilter {
     $filter?: FilterOperator;
 }
 
-type FilterOperator = StandardOperator | ColumnOperator | UnaryOperator | BinaryOperator | QueryFunctionOperator; 
+type FilterOperator =
+    | StandardOperator
+    | BooleanColumnOperator
+    | NullOperator
+    | ColumnOperator
+    | UnaryOperator
+    | BinaryOperator
+    | QueryFunctionOperator;
 
 interface ODataFetch {
     /**
@@ -107,15 +114,47 @@ type StandardEqualityOperators = 'eq' | 'ne';
 type StandardOperators = StandardEqualityOperators | 'gt' | 'ge' | 'lt' | 'le';
 
 /**
- * 
+ *
  * * Microsoft Docs: {@link https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/query/filter-rows#column-comparison Column comparison }
  */
 interface ColumnOperator {
-    column: string;
+    /**
+     * The left side of the 'X' operator must be a property of the entity.
+     */
+    left: string;
     operator: StandardOperators;
-    otherColumn: string;
+    isColumnOperation: true;
+    /**
+     * The right side of the 'X' operator must be a property of the entity.
+     */
+    right: string;
 }
 
+interface BooleanColumnOperator {
+    /**
+     * The left side of the 'X' operator must be a property of the entity.
+     */
+    left: string;
+    operator: StandardOperators;
+    isBooleanOperation: true;
+    /**
+     * The right side of the 'X' operator must be a property of the entity.
+     */
+    right: boolean;
+}
+
+interface NullOperator {
+    /**
+     * The left side of the 'X' operator must be a property of the entity.
+     */
+    left: string;
+    operator: StandardOperators;
+    isNullOperation: true;
+    /**
+     * The right side of the 'X' operator must be null.
+     */
+    right: null;
+}
 
 interface StandardOperator {
     operator: StandardOperators;
@@ -183,5 +222,5 @@ export type {
     QueryFunctionOperators,
     StandardOperator,
     StandardOperators,
-    UnaryOperator,    
+    UnaryOperator,
 };

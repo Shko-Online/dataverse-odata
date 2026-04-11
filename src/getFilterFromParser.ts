@@ -181,11 +181,13 @@ class FilterParser {
                 return { operator, left, right: Number(right.value) };
             } else if (right.type === 'word') {
                 // Constant keywords stay as StandardOperator; bare identifiers are column comparisons
-                const CONSTANTS = ['null', 'true', 'false'];
-                if (CONSTANTS.includes(right.value.toLowerCase())) {
-                    return { operator, left, right: right.value };
+                const BOOL_CONSTANTS = ['true', 'false'];
+                if (BOOL_CONSTANTS.includes(right.value.toLowerCase())) {
+                    return { operator, left, isBooleanOperation: true, right: right.value === 'true' };
+                }else if (right.value.toLowerCase() === 'null') {
+                    return { operator, left, isNullOperation: true, right: null };
                 }
-                return { column: left, operator, otherColumn: right.value };
+                return { left, operator, isColumnOperation: true, right: right.value };
             } else {
                 throw new Error(`Invalid right-hand side value of type '${right.type}' in filter expression`);
             }

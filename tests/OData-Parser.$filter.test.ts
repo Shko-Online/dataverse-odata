@@ -31,10 +31,16 @@ describe('parseOData $filter', () => {
             expect(result.$filter).toEqual({ operator: 'eq', left: 'statecode', right: 0 });
         });
 
+        test('eq operator with false value', () => {
+            const result = parseOData('?$filter=iscompany eq false');
+            expect(result.error).toBeUndefined();
+            expect(result.$filter).toEqual({ operator: 'eq', left: 'iscompany', isBooleanOperation: true, right: false });
+        });
+
         test('eq operator with null value', () => {
             const result = parseOData('?$filter=middlename eq null');
             expect(result.error).toBeUndefined();
-            expect(result.$filter).toEqual({ operator: 'eq', left: 'middlename', right: 'null' });
+            expect(result.$filter).toEqual({ operator: 'eq', left: 'middlename', isNullOperation: true, right: null });
         });
 
         test('ne operator with string value', () => {
@@ -153,13 +159,13 @@ describe('parseOData $filter', () => {
         test('column eq comparison', () => {
             const result = parseOData('?$filter=firstname eq lastname');
             expect(result.error).toBeUndefined();
-            expect(result.$filter).toEqual({ column: 'firstname', operator: 'eq', otherColumn: 'lastname' });
+            expect(result.$filter).toEqual({ left: 'firstname', operator: 'eq', isColumnOperation: true, right: 'lastname' });
         });
 
         test('column ne comparison', () => {
             const result = parseOData('?$filter=firstname ne lastname');
             expect(result.error).toBeUndefined();
-            expect(result.$filter).toEqual({ column: 'firstname', operator: 'ne', otherColumn: 'lastname' });
+            expect(result.$filter).toEqual({ left: 'firstname', operator: 'ne', isColumnOperation: true, right: 'lastname' });
         });
     });
 
