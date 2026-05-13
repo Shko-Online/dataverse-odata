@@ -1,3 +1,10 @@
+## [0.2.1](https://github.com/Shko-Online/dataverse-odata/compare/v0.2.0...v0.2.1) (2026-05-13)
+
+
+### Bug Fixes
+
+* Fixed exports for index ([d623a40](https://github.com/Shko-Online/dataverse-odata/commit/d623a40515dec7888997634cbf5d043ebbf91461))
+
 # [0.2.0](https://github.com/Shko-Online/dataverse-odata/compare/v0.1.6...v0.2.0) (2026-04-11)
 
 
