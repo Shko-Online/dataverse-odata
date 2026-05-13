@@ -63,7 +63,7 @@ function tokenize(input: string): Token[] {
         } else if (/[0-9a-fA-F]/.test(input[i]) && GUID_REGEX.test(input.slice(i))) {
             tokens.push({ type: 'string', value: input.slice(i, i + 36) });
             i += 36;
-        } else if (/[0-9]/.test(input[i]) || (input[i] === '-' && /[0-9]/.test(input[i + 1] ?? ''))) {
+        } else if (/\d/.test(input[i]) || (input[i] === '-' && /\d/.test(input[i + 1] ?? ''))) {
             let j = i;
             if (input[j] === '-') j++;
             while (j < input.length && /[0-9.]/.test(input[j])) j++;
@@ -71,7 +71,7 @@ function tokenize(input: string): Token[] {
             i = j;
         } else if (/[a-zA-Z_]/.test(input[i])) {
             let j = i;
-            while (j < input.length && /[a-zA-Z0-9_]/.test(input[j])) j++;
+            while (j < input.length && /\w/.test(input[j])) j++;
             tokens.push({ type: 'word', value: input.slice(i, j) });
             i = j;
         } else {
@@ -82,7 +82,7 @@ function tokenize(input: string): Token[] {
 }
 
 class FilterParser {
-    private tokens: Token[];
+    private readonly tokens: Token[];
     private pos = 0;
 
     constructor(tokens: Token[]) {
@@ -95,15 +95,17 @@ class FilterParser {
 
     private consume(expected?: string): Token {
         const token = this.tokens[this.pos++];
-        if (!token) throw new Error(`Unexpected end of filter expression${expected ? `, expected ${expected}` : ''}`);
+        const expectedString = expected ? `, expected ${expected}` : '';
+        if (!token) throw new Error(`Unexpected end of filter expression${expectedString}`);
         return token;
     }
 
     private expect(type: TokenType, value?: string): Token {
-        const token = this.consume(`${type}${value ? ` '${value}'` : ''}`);
+      const valueString = value ? ` '${value}'` : '';
+        const token = this.consume(`${type}${valueString}`);
         if (token.type !== type || (value !== undefined && token.value !== value)) {
             throw new Error(
-                `Expected ${type}${value ? ` '${value}'` : ''} but got ${token.type} '${token.value}'`,
+                `Expected ${type}${valueString} but got ${token.type} '${token.value}'`,
             );
         }
         return token;

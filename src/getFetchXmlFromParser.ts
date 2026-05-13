@@ -30,7 +30,7 @@ export const getFetchXmlFromParser = (parser: URLSearchParams, result: ODataQuer
     const entity = fetchXmlDocument
         .evaluate('fetch/entity', fetchXmlDocument, null, XPathResult.ANY_TYPE, null)
         .iterateNext() as Element;
-    if (fetchXmlDocument.documentElement.children.length != 1 || !entity || !entity.getAttribute('name')) {
+    if (fetchXmlDocument.documentElement.children.length != 1 || !entity?.getAttribute('name')) {
         result.error = {
             code: '0x80041102',
             message: 'Entity Name was not specified in FetchXml String.',

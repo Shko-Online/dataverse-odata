@@ -32,6 +32,13 @@ describe('parseOData $orderby', () => {
         expect(result.error?.message).toEqual(`Order By Property must be of type EdmProperty`);
     });
 
+    test('should throw when order by parameter is invalid', () => {
+        const result = parseOData('?$orderby=name descs');
+        expect(result.error).not.toBeNull();
+        expect(result.error?.code).toEqual('0x80060888');
+        expect(result.error?.message).toEqual(`Syntax error at position 10 in 'name descs'.`);
+    });
+
     test('should throw when parameter alias syntax is invalid', () => {
         const result = parseOData('?$orderby=@p1 desc, lastname asc&@p1=*name');
         expect(result.error).not.toBeNull();
